@@ -62,7 +62,13 @@ public final class V3Route extends JsonManagerRoute<Expansion> {
             final String[] parts = response.getUri().split("/");
 
             if (parts.length > 1) {
-                final Category category = Category.valueOf(parts[1].toUpperCase());
+                final Category category;
+
+                try {
+                    category = Category.valueOf(parts[1].toUpperCase());
+                } catch (Exception e) {
+                    return "Unknown category";
+                }
 
                 if (category != Category.UNIVERSAL) {
                     expansions.addAll(manager.getAllByCategory(category));
