@@ -32,6 +32,7 @@ import me.piggypiglet.framework.http.routes.objects.Response;
 import me.piggypiglet.framework.http.routes.types.json.JsonManagerRoute;
 import me.piggypiglet.framework.utils.StringUtils;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -56,7 +57,7 @@ public final class V3Route extends JsonManagerRoute<Expansion> {
 
     @Override
     protected Object provide(Response response) {
-        if (!(StringUtils.startsWithAny(response.getUri(), "v3?", "v3/") || response.getUri().equalsIgnoreCase("v3"))) {
+        if (!(response.getUri().startsWith("v3?") || StringUtils.equalsAny(response.getUri(), "v3", "v3/"))) {
             final Set<Expansion> expansions = manager.getAllByCategory(Category.UNIVERSAL);
             final String[] parts = response.getUri().split("/");
 
