@@ -32,7 +32,6 @@ import me.piggypiglet.framework.http.routes.objects.Response;
 import me.piggypiglet.framework.http.routes.types.json.JsonManagerRoute;
 import me.piggypiglet.framework.utils.StringUtils;
 
-import java.util.Arrays;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -41,15 +40,15 @@ import java.util.regex.Pattern;
 // https://www.piggypiglet.me
 // ------------------------------
 public final class V3Route extends JsonManagerRoute<Expansion> {
-    private static final Pattern REPLACE = Pattern.compile("v3/?.*");
+    private static final Pattern REGEX = Pattern.compile("v3/?.*");
 
     private final ExpansionManager manager;
 
     @Inject
     public V3Route(ExpansionManager manager) {
         super(
-                uri -> uri.startsWith("v3") || StringUtils.startsWithAny(uri.substring(3), Arrays.stream(Category.values()).map(Enum::toString).toArray(String[]::new)),
-                uri -> REPLACE.matcher(uri).replaceFirst(""),
+                uri -> REGEX.matcher(uri).matches(),
+                uri -> REGEX.matcher(uri).replaceFirst(""),
                 manager
         );
         this.manager = manager;
