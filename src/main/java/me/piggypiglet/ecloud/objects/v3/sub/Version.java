@@ -22,25 +22,26 @@
  * SOFTWARE.
  */
 
-package me.piggypiglet.ecloud;
-
-import me.piggypiglet.framework.Framework;
+package me.piggypiglet.ecloud.objects.v3.sub;
 
 // ------------------------------
 // Copyright (c) PiggyPiglet 2020
 // https://www.piggypiglet.me
 // ------------------------------
-public final class EcloudBootstrap {
-    private EcloudBootstrap() {
-        Framework.builder()
-                .main(this)
-                .pckg("me.piggypiglet.ecloud")
-                .commandPrefixes("!")
-                .build()
-                .init();
+public class Version {
+    private String url;
+    private String version;
+    private String releaseNotes;
+
+    public String getUrl() {
+        return url;
     }
 
-    public static void main(String[] args) {
-        new EcloudBootstrap();
+    public String getVersion() {
+        return version;
+    }
+
+    public String getReleaseNotes() {
+        return releaseNotes;
     }
 }
