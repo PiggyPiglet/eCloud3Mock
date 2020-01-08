@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+}
+
+group 'me.piggypiglet'
+version '1.0.0'
+mainClassName = 'me.piggypiglet.ecloud.EcloudBootstrap'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        url = 'https://repo.piggypiglet.me/repository/maven-releases'
+    }
+}
+
+dependencies {
+    compile 'me.piggypiglet:framework-core:+'
+    compile 'me.piggypiglet:framework-logback:+'
+    compile 'me.piggypiglet:framework-console:+'
+    compile 'me.piggypiglet:framework-http:+'
+}
