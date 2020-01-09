@@ -42,13 +42,13 @@ public class Expansion implements SearchUtils.Searchable {
     private String sourceUrl;
     private String dependencyUrl;
     private boolean verified;
-    private Set<Version> versions;
+    private List<Version> versions;
     private String author;
     private String latestVersion;
     private long lastUpdate;
     private int averageRating;
     private int ratingsCount;
-    private Set<String> placeholders;
+    private List<String> placeholders;
 
     @Override
     public String getName() {
@@ -75,7 +75,7 @@ public class Expansion implements SearchUtils.Searchable {
         return verified;
     }
 
-    public Set<Version> getVersions() {
+    public List<Version> getVersions() {
         return versions;
     }
 
@@ -99,7 +99,7 @@ public class Expansion implements SearchUtils.Searchable {
         return ratingsCount;
     }
 
-    public Set<String> getPlaceholders() {
+    public List<String> getPlaceholders() {
         return placeholders;
     }
 }

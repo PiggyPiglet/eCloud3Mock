@@ -24,18 +24,24 @@
 
 package me.piggypiglet.ecloud.data;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.google.inject.Singleton;
 import me.piggypiglet.ecloud.objects.v3.Expansion;
-import me.piggypiglet.ecloud.objects.v3.hard.DemoExpansions;
 import me.piggypiglet.ecloud.objects.v3.sub.Category;
+import me.piggypiglet.ecloud.objects.v3.sub.Version;
+import me.piggypiglet.ecloud.utils.DataUtils;
+import me.piggypiglet.ecloud.utils.WebUtils;
 import me.piggypiglet.framework.managers.implementations.SearchableManager;
 import me.piggypiglet.framework.managers.objects.KeyTypeInfo;
+import me.piggypiglet.framework.mapper.LevenshteinObjectMapper;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 // ------------------------------
 // Copyright (c) PiggyPiglet 2020
@@ -47,7 +53,15 @@ public final class ExpansionManager extends SearchableManager<Expansion> {
 
     @Override
     protected void preConfigure() {
-        Stream.of(DemoExpansions.BUKKIT_EXPANSION, DemoExpansions.SPONGE_EXPANSION, DemoExpansions.NUKKIT_EXPANSION, DemoExpansions.UNIVERSAL_EXPANSION).forEach(this::add);
+        final String content;
+
+        try {
+            content = WebUtils.request("https://api.extendedclip.com/v2");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        DataUtils.generate(content).forEach(this::add);
     }
 
     @Override
