@@ -27,12 +27,11 @@ package me.piggypiglet.ecloud.routes.v3;
 import com.google.inject.Inject;
 import me.piggypiglet.ecloud.data.ExpansionManager;
 import me.piggypiglet.ecloud.objects.v3.Expansion;
-import me.piggypiglet.ecloud.objects.v3.sub.Category;
+import me.piggypiglet.ecloud.objects.v3.sub.Platform;
 import me.piggypiglet.framework.http.routes.objects.Response;
 import me.piggypiglet.framework.http.routes.types.json.JsonManagerRoute;
 import me.piggypiglet.framework.utils.StringUtils;
 
-import java.util.Arrays;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -58,20 +57,20 @@ public final class V3Route extends JsonManagerRoute<Expansion> {
     @Override
     protected Object provide(Response response) {
         if (!(response.getUri().startsWith("v3?") || StringUtils.equalsAny(response.getUri(), "v3", "v3/"))) {
-            final Set<Expansion> expansions = manager.getAllByCategory(Category.UNIVERSAL);
+            final Set<Expansion> expansions = manager.getAllByPlatform(Platform.UNIVERSAL);
             final String[] parts = response.getUri().split("/");
 
             if (parts.length > 1) {
-                final Category category;
+                final Platform platform;
 
                 try {
-                    category = Category.valueOf(parts[1].toUpperCase());
+                    platform = Platform.valueOf(parts[1].toUpperCase());
                 } catch (Exception e) {
-                    return "Unknown category";
+                    return "Unknown platform";
                 }
 
-                if (category != Category.UNIVERSAL) {
-                    expansions.addAll(manager.getAllByCategory(category));
+                if (platform != Platform.UNIVERSAL) {
+                    expansions.addAll(manager.getAllByPlatform(platform));
                 }
             }
 

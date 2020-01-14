@@ -24,23 +24,17 @@
 
 package me.piggypiglet.ecloud.data;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.google.inject.Singleton;
 import me.piggypiglet.ecloud.objects.v3.Expansion;
-import me.piggypiglet.ecloud.objects.v3.sub.Category;
-import me.piggypiglet.ecloud.objects.v3.sub.Version;
+import me.piggypiglet.ecloud.objects.v3.sub.Platform;
 import me.piggypiglet.ecloud.utils.DataUtils;
 import me.piggypiglet.ecloud.utils.WebUtils;
 import me.piggypiglet.framework.managers.implementations.SearchableManager;
 import me.piggypiglet.framework.managers.objects.KeyTypeInfo;
-import me.piggypiglet.framework.mapper.LevenshteinObjectMapper;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 // ------------------------------
@@ -82,7 +76,7 @@ public final class ExpansionManager extends SearchableManager<Expansion> {
         expansions.remove(item.getName());
     }
 
-    public Set<Expansion> getAllByCategory(Category category) {
-        return getAll().stream().filter(e -> e.getCategory() == category).collect(Collectors.toSet());
+    public Set<Expansion> getAllByPlatform(Platform platform) {
+        return getAll().stream().filter(e -> e.getPlatform() == platform).collect(Collectors.toSet());
     }
 }

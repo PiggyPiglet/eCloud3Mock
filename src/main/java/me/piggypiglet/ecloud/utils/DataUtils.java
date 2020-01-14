@@ -3,11 +3,14 @@ package me.piggypiglet.ecloud.utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import me.piggypiglet.ecloud.objects.v3.Expansion;
-import me.piggypiglet.ecloud.objects.v3.sub.Category;
+import me.piggypiglet.ecloud.objects.v3.sub.Platform;
 import me.piggypiglet.ecloud.objects.v3.sub.Version;
 import me.piggypiglet.framework.mapper.LevenshteinObjectMapper;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -29,7 +32,7 @@ public final class DataUtils {
     @SuppressWarnings("unchecked")
     private static Expansion expansion(String name, Map<String, Object> map) {
         map.put("name", name);
-        map.put("category", Category.values()[ThreadLocalRandom.current().nextInt(0, Category.values().length)]);
+        map.put("platform", Platform.values()[ThreadLocalRandom.current().nextInt(0, Platform.values().length)]);
         map.put("versions", ((List<Map<String, Object>>) map.get("versions")).stream()
                 .map(DataUtils::version)
                 .collect(Collectors.toList()));

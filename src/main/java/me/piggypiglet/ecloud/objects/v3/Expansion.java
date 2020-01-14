@@ -24,12 +24,11 @@
 
 package me.piggypiglet.ecloud.objects.v3;
 
-import me.piggypiglet.ecloud.objects.v3.sub.Category;
+import me.piggypiglet.ecloud.objects.v3.sub.Platform;
 import me.piggypiglet.ecloud.objects.v3.sub.Version;
 import me.piggypiglet.framework.utils.SearchUtils;
 
 import java.util.List;
-import java.util.Set;
 
 // ------------------------------
 // Copyright (c) PiggyPiglet 2020
@@ -38,7 +37,7 @@ import java.util.Set;
 public class Expansion implements SearchUtils.Searchable {
     private String name;
     private String description;
-    private Category category;
+    private Platform platform;
     private String sourceUrl;
     private String dependencyUrl;
     private boolean verified;
@@ -59,8 +58,8 @@ public class Expansion implements SearchUtils.Searchable {
         return description;
     }
 
-    public Category getCategory() {
-        return category;
+    public Platform getPlatform() {
+        return platform;
     }
 
     public String getSourceUrl() {
