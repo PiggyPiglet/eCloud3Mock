@@ -34,6 +34,7 @@ import me.piggypiglet.framework.utils.StringUtils;
 import me.piggypiglet.framework.utils.map.Maps;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -76,11 +77,15 @@ public final class V3Route extends JsonManagerRoute<Expansion> {
                 }
             }
 
-            return expansions;
+            return map(expansions);
         }
 
+        return map(manager.getAll());
+    }
+
+    private Map<String, Object> map(Object val) {
         return Maps.of(new HashMap<String, Object>())
-                .key("expansions").value(manager.getAll())
+                .key("expansions").value(val)
                 .build();
     }
 }
