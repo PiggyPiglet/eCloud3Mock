@@ -17,8 +17,8 @@ repositories {
 }
 
 dependencies {
-    compile 'me.piggypiglet:framework-core:1.8.17'
-    compile 'me.piggypiglet:framework-logback:1.8.17'
-    compile 'me.piggypiglet:framework-console:1.8.17'
-    compile 'me.piggypiglet:framework-http:1.8.17'
+    compile 'me.piggypiglet:framework-core:1.8.26'
+    compile 'me.piggypiglet:framework-logback:1.8.26'
+    compile 'me.piggypiglet:framework-console:1.8.26'
+    compile 'me.piggypiglet:framework-http:1.8.26'
 }

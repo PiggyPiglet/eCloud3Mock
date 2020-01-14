@@ -31,7 +31,9 @@ import me.piggypiglet.ecloud.objects.v3.sub.Platform;
 import me.piggypiglet.framework.http.routes.objects.Response;
 import me.piggypiglet.framework.http.routes.types.json.JsonManagerRoute;
 import me.piggypiglet.framework.utils.StringUtils;
+import me.piggypiglet.framework.utils.map.Maps;
 
+import java.util.HashMap;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -77,6 +79,8 @@ public final class V3Route extends JsonManagerRoute<Expansion> {
             return expansions;
         }
 
-        return manager.getAll();
+        return Maps.of(new HashMap<String, Object>())
+                .key("expansions").value(manager.getAll())
+                .build();
     }
 }
