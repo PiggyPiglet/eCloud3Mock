@@ -24,26 +24,26 @@
 
 package me.piggypiglet.ecloud.routes.v3;
 
+import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 import me.piggypiglet.ecloud.data.ExpansionManager;
 import me.piggypiglet.ecloud.objects.v3.Expansion;
 import me.piggypiglet.ecloud.objects.v3.sub.Platform;
 import me.piggypiglet.framework.http.routes.objects.Response;
 import me.piggypiglet.framework.http.routes.types.json.JsonManagerRoute;
-import me.piggypiglet.framework.utils.StringUtils;
-import me.piggypiglet.framework.utils.map.Maps;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.Collection;
+import java.util.Optional;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 // ------------------------------
 // Copyright (c) PiggyPiglet 2020
 // https://www.piggypiglet.me
 // ------------------------------
 public final class V3Route extends JsonManagerRoute<Expansion> {
-    private static final Pattern REGEX = Pattern.compile("v3/?.*");
+    private static final Pattern REGEX = Pattern.compile("v3?.*");
 
     private final ExpansionManager manager;
 
@@ -59,33 +59,20 @@ public final class V3Route extends JsonManagerRoute<Expansion> {
 
     @Override
     protected Object provide(Response response) {
-        if (!(response.getUri().startsWith("v3?") || StringUtils.equalsAny(response.getUri(), "v3", "v3/"))) {
-            final Set<Expansion> expansions = manager.getAllByPlatform(Platform.UNIVERSAL);
-            final String[] parts = response.getUri().split("/");
+        final Multimap<String, String> params = response.getParams();
+        final Stream<Expansion> expansions = Stream.of(params.get("platforms"))
+                .map(platforms -> platforms.isEmpty() ? manager.getAll() : manager.getAllByPlatforms(platforms.stream()
+                        .map(String::toUpperCase)
+                        .map(Platform::valueOf)
+                        .collect(Collectors.toSet())))
+                .flatMap(Collection::stream);
 
-            if (parts.length > 1) {
-                final Platform platform;
+        final Optional<String> name = params.get("name").stream().findAny();
 
-                try {
-                    platform = Platform.valueOf(parts[1].toUpperCase());
-                } catch (Exception e) {
-                    return "Unknown platform";
-                }
-
-                if (platform != Platform.UNIVERSAL) {
-                    expansions.addAll(manager.getAllByPlatform(platform));
-                }
-            }
-
-            return map(expansions);
+        if (name.isPresent()) {
+            return expansions.filter(expansion -> expansion.getName().equalsIgnoreCase(name.get())).findAny().orElse(null);
         }
 
-        return map(manager.getAll());
-    }
-
-    private Map<String, Object> map(Object val) {
-        return Maps.of(new HashMap<String, Object>())
-                .key("expansions").value(val)
-                .build();
+        return expansions.collect(Collectors.toSet());
     }
 }

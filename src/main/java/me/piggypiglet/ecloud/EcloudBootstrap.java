@@ -31,16 +31,18 @@ import me.piggypiglet.framework.Framework;
 // https://www.piggypiglet.me
 // ------------------------------
 public final class EcloudBootstrap {
-    private EcloudBootstrap() {
+    public static void main(String[] args) {
+        new EcloudBootstrap().run();
+    }
+
+    private EcloudBootstrap() {}
+
+    private void run() {
         Framework.builder()
                 .main(this)
                 .pckg("me.piggypiglet.ecloud")
                 .commandPrefixes("!")
                 .build()
                 .init();
-    }
-
-    public static void main(String[] args) {
-        new EcloudBootstrap();
     }
 }

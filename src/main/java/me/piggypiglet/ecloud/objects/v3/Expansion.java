@@ -28,7 +28,7 @@ import me.piggypiglet.ecloud.objects.v3.sub.Platform;
 import me.piggypiglet.ecloud.objects.v3.sub.Version;
 import me.piggypiglet.framework.utils.SearchUtils;
 
-import java.util.List;
+import java.util.Set;
 
 // ------------------------------
 // Copyright (c) PiggyPiglet 2020
@@ -37,17 +37,15 @@ import java.util.List;
 public class Expansion implements SearchUtils.Searchable {
     private String name;
     private String description;
-    private Platform platform;
+    private Set<Platform> platforms;
     private String sourceUrl;
     private String dependencyUrl;
     private boolean verified;
-    private List<Version> versions;
+    private Set<Version> versions;
     private String author;
     private String latestVersion;
     private long lastUpdate;
-    private int averageRating;
-    private int ratingsCount;
-    private List<String> placeholders;
+    private Set<String> placeholders;
 
     @Override
     public String getName() {
@@ -58,8 +56,8 @@ public class Expansion implements SearchUtils.Searchable {
         return description;
     }
 
-    public Platform getPlatform() {
-        return platform;
+    public Set<Platform> getPlatforms() {
+        return platforms;
     }
 
     public String getSourceUrl() {
@@ -74,7 +72,7 @@ public class Expansion implements SearchUtils.Searchable {
         return verified;
     }
 
-    public List<Version> getVersions() {
+    public Set<Version> getVersions() {
         return versions;
     }
 
@@ -90,15 +88,7 @@ public class Expansion implements SearchUtils.Searchable {
         return lastUpdate;
     }
 
-    public int getAverageRating() {
-        return averageRating;
-    }
-
-    public int getRatingsCount() {
-        return ratingsCount;
-    }
-
-    public List<String> getPlaceholders() {
+    public Set<String> getPlaceholders() {
         return placeholders;
     }
 }

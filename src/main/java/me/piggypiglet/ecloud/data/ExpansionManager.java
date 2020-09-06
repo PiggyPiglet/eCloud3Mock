@@ -26,9 +26,8 @@ package me.piggypiglet.ecloud.data;
 
 import com.google.inject.Singleton;
 import me.piggypiglet.ecloud.objects.v3.Expansion;
+import me.piggypiglet.ecloud.objects.v3.hard.DemoExpansions;
 import me.piggypiglet.ecloud.objects.v3.sub.Platform;
-import me.piggypiglet.ecloud.utils.DataUtils;
-import me.piggypiglet.ecloud.utils.WebUtils;
 import me.piggypiglet.framework.managers.implementations.SearchableManager;
 import me.piggypiglet.framework.managers.objects.KeyTypeInfo;
 
@@ -36,6 +35,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 // ------------------------------
 // Copyright (c) PiggyPiglet 2020
@@ -47,15 +47,10 @@ public final class ExpansionManager extends SearchableManager<Expansion> {
 
     @Override
     protected void preConfigure() {
-        final String content;
-
-        try {
-            content = WebUtils.request("https://api.extendedclip.com/v2");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        DataUtils.generate(content).forEach(this::add);
+        Stream.of(
+                DemoExpansions.BUKKIT_EXPANSION, DemoExpansions.NUKKIT_EXPANSION, DemoExpansions.SPONGE_EXPANSION,
+                DemoExpansions.UNIVERSAL_EXPANSION
+        ).forEach(this::add);
     }
 
     @Override
@@ -76,7 +71,7 @@ public final class ExpansionManager extends SearchableManager<Expansion> {
         expansions.remove(item.getName());
     }
 
-    public Set<Expansion> getAllByPlatform(Platform platform) {
-        return getAll().stream().filter(e -> e.getPlatform() == platform).collect(Collectors.toSet());
+    public Set<Expansion> getAllByPlatforms(Set<Platform> platforms) {
+        return getAll().stream().filter(e -> e.getPlatforms().containsAll(platforms)).collect(Collectors.toSet());
     }
 }

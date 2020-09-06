@@ -29,7 +29,6 @@ package me.piggypiglet.ecloud.objects.v3.sub;
 // https://www.piggypiglet.me
 // ------------------------------
 public enum Platform {
-    UNIVERSAL,
     BUKKIT,
     SPONGE,
     NUKKIT
